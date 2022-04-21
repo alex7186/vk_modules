@@ -28,8 +28,9 @@ while True:
     for event in vk_long_poll.listen():
 
         event_type = str(event.type)
+        event_confidential = (not event.from_group) and (not event.from_group)
 
-        if event_type not in events_codes_white_list:
+        if (event_type not in events_codes_white_list) and event_confidential:
             continue
 
         execute_modules(
