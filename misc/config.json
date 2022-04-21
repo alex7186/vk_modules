@@ -1,0 +1,12 @@
+{
+    "APP_NAME" : "vk_modules",
+    "events_codes_white_list" : 
+    [
+        "VkEventType.MESSAGE_NEW",
+        "VkEventType.MESSAGE_EDIT"
+    ],
+    "loaded_modules" : 
+    [
+        "message_logger"
+    ]
+}

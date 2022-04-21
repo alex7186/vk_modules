@@ -1,0 +1,23 @@
+import logging
+
+
+async def module_start(SCRIPT_PATH):
+    logging.basicConfig(
+        filename=f"{SCRIPT_PATH}/misc/logfile.txt",
+        filemode="a",
+        format="%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s",
+        datefmt="%H:%M:%S",
+        level=logging.INFO,
+    )
+
+
+async def module_execute(SCRIPT_PATH, event, VK_TOKEN):
+    logging_info_str = f"Message {event.text[:30]}, \
+        id {event.message_id}, \
+        from {event.user_id}, \
+        from_user {event.from_user}, \
+        from_me {event.from_me}".replace(
+        "         ", " "
+    )
+
+    logging.info(logging_info_str)
