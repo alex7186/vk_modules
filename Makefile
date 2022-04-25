@@ -34,7 +34,7 @@ service-status:
 
 service-stop:
 	systemctl --user stop $(app_name).service || true
-	@echo "\n❌  service stopped"
+	@echo "\n❌  service stopped\n"
 
 service-start:
 	systemctl --user daemon-reload
@@ -50,3 +50,6 @@ service-cat:
 
 start:
 	@$(MAKE) service-start
+
+stop:
+	@$(MAKE) service-stop

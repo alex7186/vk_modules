@@ -13,14 +13,7 @@ async def module_start(SCRIPT_PATH):
         full_file_path=f"{SCRIPT_PATH}/modules/8h_muter/config.json",
     )
 
-    logging.basicConfig(
-        filename=f"{SCRIPT_PATH}/modules/message_logger/logfile.txt",
-        filemode="a",
-        format="%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s",
-        datefmt="%H:%M:%S",
-        level=logging.INFO,
-    )
-    print("MODULE message_logger INITIALIZED")
+    print("MODULE 8h_muter INITIALIZED")
 
 
 async def module_execute(SCRIPT_PATH, event, vk_session):
