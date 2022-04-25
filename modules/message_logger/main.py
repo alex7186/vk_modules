@@ -12,7 +12,11 @@ async def module_start(SCRIPT_PATH):
     print("MODULE message_logger INITIALIZED")
 
 
-async def module_execute(SCRIPT_PATH, event, VK_TOKEN):
+async def module_execute(SCRIPT_PATH, event, vk_session):
+
+    if event.type != "VkEventType.MESSAGE_NEW":
+        return None
+
     logging_info_str = f"Message {event.text[:30]}, \
         id {event.message_id}, \
         from {event.user_id}, \

@@ -7,6 +7,7 @@
     ],
     "loaded_modules" : 
     [
-        "message_logger"
+        "message_logger",
+        "8h_muter"
     ]
 }

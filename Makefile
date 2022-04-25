@@ -30,18 +30,14 @@ service-stop:
 	systemctl --user stop $(app_name).service || true
 
 service-start:
-	# @$(MAKE) service-status
-	# @$(MAKE) service-stop
-	
-
+	systemctl --user restart $(app_name).service
 	systemctl --user enable $(app_name).service
 	systemctl --user start $(app_name).service
 
 	$(MAKE) service-status
 
-service-restart:
-	systemctl --user restart $(app_name).service
-	$(MAKE) service-status
-
 service-cat:
 	cat ~/.config/systemd/user/$(app_name).service
+
+start:
+	$(MAKE) service-start

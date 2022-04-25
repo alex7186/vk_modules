@@ -1,7 +1,7 @@
 from vk_api import VkApi
-from vk_api.longpoll import VkLongPoll, VkEventType
-
+from vk_api.longpoll import VkLongPoll
 import os
+
 
 from back.token_manager import get_token
 from back.config_manager import get_config
@@ -11,10 +11,6 @@ SCRIPT_PATH = "/".join(os.path.realpath(__file__).split("/")[:-1])
 CONFIG = get_config(SCRIPT_PATH)
 events_codes_white_list = CONFIG["events_codes_white_list"]
 
-import datetime
-
-with open(f"{SCRIPT_PATH}/aaa.txt", "a") as f:
-    f.write(str(datetime.datetime.now()) + "\n")
 
 VK_TOKEN = get_token(SCRIPT_PATH)
 vk_session = VkApi(token=VK_TOKEN)
@@ -22,6 +18,7 @@ vk_long_poll = VkLongPoll(vk_session)
 
 
 imported_modules = import_modules(CONFIG["loaded_modules"])
+print("ALL MODULES IMPORTED")
 start_modules(imported_modules, SCRIPT_PATH=SCRIPT_PATH)
 
 while True:
@@ -36,6 +33,6 @@ while True:
         execute_modules(
             imported_modules=imported_modules,
             SCRIPT_PATH=SCRIPT_PATH,
-            VK_TOKEN=VK_TOKEN,
+            vk_session=vk_session,
             event=event,
         )
