@@ -25,8 +25,8 @@ setup:
 	@cd $(path)
 	@echo "\n📝  installing dependencies...\n"
 	@pip3 install -r ./misc/requirements.txt
-	@# @echo "\n📅  adding to cron...\n"
-	@# @python3 back/crontab_manager.py start
+	@echo "\n📅  adding service to systemd...\n"
+	@systemctl --user enable $(app_name).service
 	@echo "\n✅  configured successfully"
 
 service-status:
@@ -39,8 +39,6 @@ service-stop:
 service-start:
 	systemctl --user daemon-reload
 	systemctl --user restart $(app_name).service
-	systemctl --user enable $(app_name).service
-	systemctl --user start $(app_name).service
 	@echo "\n✅  service started\n"
 	@sleep .5
 	@$(MAKE) service-status
