@@ -6,7 +6,9 @@ path = ~/scripts/$(app_name)
 
 push:
 	@cd $(path)
+	@echo "\n🧹 cleaning the code..."
 	@python -m black .
+	@echo "\n⚙️ pulling to git..."
 	@git add .
 	@git commit -m $(commit_name)
 	@git push origin main
