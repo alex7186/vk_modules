@@ -1,0 +1,13 @@
+[Unit]
+After=multi-user.target
+
+[Service]
+WorkingDirectory=/home/pi/scripts/vk_modules/
+Type=simple
+ExecStart=/usr/bin/python3 -u /home/pi/scripts/vk_modules/app.py
+RemainAfterExit=yes
+TimeoutStartSec=0
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

@@ -3,12 +3,13 @@ import logging
 
 async def module_start(SCRIPT_PATH):
     logging.basicConfig(
-        filename=f"{SCRIPT_PATH}/misc/logfile.txt",
+        filename=f"{SCRIPT_PATH}/modules/message_logger/logfile.txt",
         filemode="a",
         format="%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s",
         datefmt="%H:%M:%S",
         level=logging.INFO,
     )
+    print("MODULE message_logger INITIALIZED")
 
 
 async def module_execute(SCRIPT_PATH, event, VK_TOKEN):
@@ -19,5 +20,4 @@ async def module_execute(SCRIPT_PATH, event, VK_TOKEN):
         from_me {event.from_me}".replace(
         "         ", " "
     )
-
     logging.info(logging_info_str)
