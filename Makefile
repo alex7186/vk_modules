@@ -8,7 +8,7 @@ push:
 	@cd $(path)
 	@echo "\n🧹 cleaning the code...\n"
 	@python -m black .
-	@echo "\n⚙️ pulling to git...\n"
+	@echo "\n⚙️  pulling to git...\n"
 	@git add .
 	@git commit -m $(commit_name)
 	@git push origin main
