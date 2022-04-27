@@ -30,6 +30,8 @@ while True:
         if (event_type not in events_codes_white_list) and event_confidential:
             continue
 
+        print(event.datetime)
+
         execute_modules(
             imported_modules=imported_modules,
             SCRIPT_PATH=SCRIPT_PATH,

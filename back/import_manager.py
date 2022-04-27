@@ -30,7 +30,7 @@ def start_modules(imported_modules, SCRIPT_PATH):
     modules_init_event_loop.close()
 
 
-def execute_modules(imported_modules, SCRIPT_PATH, event, VK_TOKEN):
+def execute_modules(imported_modules, SCRIPT_PATH, event, vk_session):
     modules_execute_event_loop = asyncio.new_event_loop()
     tasks = []
     for module in imported_modules:
@@ -39,7 +39,7 @@ def execute_modules(imported_modules, SCRIPT_PATH, event, VK_TOKEN):
                 module.module_execute(
                     SCRIPT_PATH=SCRIPT_PATH,
                     event=event,
-                    VK_TOKEN=VK_TOKEN,
+                    vk_session=vk_session,
                 )
             )
         )

@@ -1,8 +1,7 @@
 today =`date '+%Y-%m-%d  %H:%M:%S'`
 commit_name = "autocommit $(today)"
 app_name = vk_modules
-path = ~/scripts/$(app_name)
-
+path = $(CURDIR)
 
 push:
 	@cd $(path)
@@ -16,9 +15,9 @@ push:
 	
 setup:
 	@echo "\n⚙️  making user config folders...\n"
-	@mkdir ~/.config ||true
-	@mkdir ~/.config/systemd ||true
-	@mkdir ~/.config/systemd/user ||true
+	-@mkdir ~/.config
+	-@mkdir ~/.config/systemd
+	-@mkdir ~/.config/systemd/user
 	@echo "\n⚙️  moving service to config folder..."
 	@sudo cp $(path)/misc/$(app_name).service ~/.config/systemd/user/$(app_name).service
 
@@ -29,22 +28,25 @@ setup:
 	@systemctl --user enable $(app_name).service
 	@echo "\n✅  configured successfully"
 
-service-status:
-	@systemctl --user status $(app_name).service || true
+status:
+	-@systemctl --user status $(app_name).service
 
 service-stop:
-	systemctl --user stop $(app_name).service || true
+	-@systemctl --user stop $(app_name).service
 	@echo "\n❌  service stopped\n"
 
 service-start:
-	systemctl --user daemon-reload
-	systemctl --user restart $(app_name).service
+	-@systemctl --user restart $(app_name).service
 	@echo "\n✅  service started\n"
 	@sleep .5
-	@$(MAKE) service-status
+	@$(MAKE) status
 
 service-cat:
-	cat ~/.config/systemd/user/$(app_name).service
+	@cat ~/.config/systemd/user/$(app_name).service
+
+restart:
+	@$(MAKE) service-stop
+	@$(MAKE) service-start
 
 start:
 	@$(MAKE) service-start

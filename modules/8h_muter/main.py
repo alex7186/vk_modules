@@ -1,4 +1,4 @@
-import logging
+from datetime import datetime
 
 from back.config_manager import get_config
 
@@ -21,8 +21,10 @@ async def module_execute(SCRIPT_PATH, event, vk_session):
 
     vk_event_new_message = event.type == "VkEventType.MESSAGE_NEW"
     message_from_target_user = str(event.user_id) in CONFIG["vk_ids_to_restrict"]
+    event_date = datetime.strptime(event.datetime, "%Y-%m-%d %H:%M:%S")
+    correct_time = event_date >= 20
 
-    if vk_event_new_message and message_from_target_user:
+    if vk_event_new_message and message_from_target_user and correct_time:
         vk_session.account.setSilenceMode(
             peer_id=event.user_id, time=CONFIG["mute_timeout_seconds"], sound=0
         )
