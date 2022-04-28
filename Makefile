@@ -18,8 +18,8 @@ setup:
 	-@mkdir ~/.config
 	-@mkdir ~/.config/systemd
 	-@mkdir ~/.config/systemd/user
-	@echo "\n⚙️  moving service to config folder..."
-	@sudo cp $(path)/misc/$(app_name).service ~/.config/systemd/user/$(app_name).service
+	
+	@$(MAKE) service-copy
 
 	@cd $(path)
 	@echo "\n📝  installing dependencies...\n"
@@ -30,6 +30,11 @@ setup:
 
 status:
 	-@systemctl --user status $(app_name).service
+
+service-copy:
+	@echo "\n⚙️  moving service to config folder..."
+	@sudo cp $(path)/misc/$(app_name).service ~/.config/systemd/user/$(app_name).service
+	@systemctl --user daemon-reload
 
 service-stop:
 	-@systemctl --user stop $(app_name).service
