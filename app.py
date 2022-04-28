@@ -27,10 +27,8 @@ while True:
         event_type = str(event.type)
         event_confidential = (not event.from_group) and (not event.from_group)
 
-        if (event_type not in events_codes_white_list) and event_confidential:
+        if event_type not in events_codes_white_list:  # and event_confidential:
             continue
-
-        print(event.datetime)
 
         execute_modules(
             imported_modules=imported_modules,

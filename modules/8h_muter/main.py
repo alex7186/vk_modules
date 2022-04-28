@@ -18,13 +18,19 @@ async def module_start(SCRIPT_PATH):
 
 async def module_execute(SCRIPT_PATH, event, vk_session):
     global CONFIG
+    try:
+        message_from_target_user = str(event.user_id) in CONFIG["vk_ids_to_restrict"]
+        correct_time = (event.datetime.hour >= 20) or (event.datetime.hour <= 8)
 
-    vk_event_new_message = event.type == "VkEventType.MESSAGE_NEW"
-    message_from_target_user = str(event.user_id) in CONFIG["vk_ids_to_restrict"]
-    event_date = datetime.strptime(event.datetime, "%Y-%m-%d %H:%M:%S")
-    correct_time = event_date >= 20
+        if message_from_target_user and correct_time:
 
-    if vk_event_new_message and message_from_target_user and correct_time:
-        vk_session.account.setSilenceMode(
-            peer_id=event.user_id, time=CONFIG["mute_timeout_seconds"], sound=0
-        )
+            vk_session.method(
+                method="account.setSilenceMode",
+                values={
+                    "peer_id": event.user_id,
+                    "time": CONFIG["mute_timeout_seconds"],
+                    "sound": 0,
+                },
+            )
+    except AttributeError:
+        pass

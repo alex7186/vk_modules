@@ -38,8 +38,6 @@ service-stop:
 service-start:
 	-@systemctl --user restart $(app_name).service
 	@echo "\n✅  service started\n"
-	@sleep .5
-	@$(MAKE) status
 
 service-cat:
 	@cat ~/.config/systemd/user/$(app_name).service
@@ -50,6 +48,8 @@ restart:
 
 start:
 	@$(MAKE) service-start
+	@sleep .5
+	@$(MAKE) status
 
 stop:
 	@$(MAKE) service-stop

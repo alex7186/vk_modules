@@ -17,12 +17,11 @@ async def module_execute(SCRIPT_PATH, event, vk_session):
     event_from_user = event.from_user
 
     if event_type_new_message and event_from_user:
+        logging_info_str = ""
 
-        logging_info_str = f"Message {event.text[:30]}, \
-            id {event.message_id}, \
-            from {event.user_id}, \
-            from_user {event.from_user}, \
-            from_me {event.from_me}".replace(
-            "         ", " "
-        )
+        logging_info_str += f"Message {event.text[:30]}::: "
+        logging_info_str += f"id {event.message_id}::: "
+        logging_info_str += f"from {event.user_id}::: "
+        logging_info_str += f"from_user {event.from_user}::: "
+        logging_info_str += f"from_me {event.from_me}"
         logging.info(logging_info_str)
