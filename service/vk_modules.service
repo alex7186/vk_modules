@@ -5,10 +5,11 @@ After=multi-user.target
 WorkingDirectory=/home/pi/scripts/vk_modules/
 Type=simple
 ExecStart=/usr/bin/python3 -u /home/pi/scripts/vk_modules/app.py
+# ExecStart=bash /home/pi/scripts/vk_modules/service/app_starter.sh
 RemainAfterExit=yes
 TimeoutStartSec=0
-Restart=on-failure
-RestartSec=5s
+Restart=always
+RestartSec=3s
 
 [Install]
 WantedBy=multi-user.target

@@ -10,8 +10,10 @@ push:
 	@echo "\n⚙️  pulling to git...\n"
 	@git add .
 	@git commit -m $(commit_name)
+	@echo "\n⚙️ pulling as $(commit_name)"
 	@git push origin main
-	@echo "\n✅ succussfully pulled as $(commit_name)"
+	@echo "\n✅ done!"
+	
 	
 setup:
 	@echo "\n⚙️  making user config folders...\n"
@@ -26,15 +28,16 @@ setup:
 	@pip3 install -r ./misc/requirements.txt
 	@echo "\n📅  adding service to systemd...\n"
 	@systemctl --user enable $(app_name).service
-	@echo "\n✅  configured successfully"
+	@echo "\n✅ done!"
 
 status:
 	-@systemctl --user status $(app_name).service
 
 service-copy:
 	@echo "\n⚙️  moving service to config folder..."
-	@sudo cp $(path)/misc/$(app_name).service ~/.config/systemd/user/$(app_name).service
+	@sudo cp $(path)/service/$(app_name).service ~/.config/systemd/user/$(app_name).service
 	@systemctl --user daemon-reload
+	@echo "\n✅ done!"
 
 service-stop:
 	-@systemctl --user stop $(app_name).service
@@ -47,13 +50,9 @@ service-start:
 service-cat:
 	@cat ~/.config/systemd/user/$(app_name).service
 
-restart:
-	@$(MAKE) service-stop
-	@$(MAKE) service-start
-
 start:
 	@$(MAKE) service-start
-	@sleep .5
+	@sleep 2
 	@$(MAKE) status
 
 stop:

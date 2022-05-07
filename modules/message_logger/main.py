@@ -9,11 +9,10 @@ async def module_start(SCRIPT_PATH):
         datefmt="%H:%M:%S",
         level=logging.INFO,
     )
-    print("MODULE message_logger INITIALIZED")
 
 
 async def module_execute(SCRIPT_PATH, event, vk_session):
-    event_type_new_message = event.type != "VkEventType.MESSAGE_NEW"
+    event_type_new_message = str(event.type) == "VkEventType.MESSAGE_NEW"
     event_from_user = event.from_user
 
     if event_type_new_message and event_from_user:

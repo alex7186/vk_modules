@@ -8,6 +8,6 @@
     "loaded_modules" : 
     [
         "message_logger",
-        "8h_muter"
+        "status_sheduler"
     ]
 }
