@@ -1,5 +1,4 @@
 from datetime import datetime
-from sys import prefix
 
 from back.config_manager import get_config, set_config
 

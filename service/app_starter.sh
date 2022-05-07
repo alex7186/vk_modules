@@ -1,1 +1,0 @@
-# /usr/bin/python3 -u /home/pi/scripts/vk_modules/app.py

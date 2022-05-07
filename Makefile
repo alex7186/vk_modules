@@ -34,7 +34,7 @@ status:
 	-@systemctl --user status $(app_name).service
 
 service-copy:
-	@echo "\n⚙️  moving service to config folder..."
+	@echo "\n⚙️  moving service to config folder...\n"
 	@sudo cp $(path)/service/$(app_name).service ~/.config/systemd/user/$(app_name).service
 	@systemctl --user daemon-reload
 	@echo "\n✅ done!"
