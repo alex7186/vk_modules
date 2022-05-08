@@ -1,3 +1,4 @@
+import asyncio
 from vk_api import VkApi
 from vk_api.longpoll import VkLongPoll
 import os
@@ -20,32 +21,38 @@ imported_modules = import_modules(modules_list=modules_list)
 start_modules(imported_modules, SCRIPT_PATH=SCRIPT_PATH, modules_list=modules_list)
 
 
-def react_on_event(imported_modules, SCRIPT_PATH, vk_session, event):
-    execute_modules(
-        imported_modules=imported_modules,
-        SCRIPT_PATH=SCRIPT_PATH,
-        vk_session=vk_session,
-        event=event,
-    )
+def react_on_event(event, SCRIPT_PATH, vk_session):
+
+    # checking event
+    should_react_on_event = str(event.type) in events_codes_white_list
+
+    if should_react_on_event:
+        # executing modules
+        execute_modules(
+            imported_modules=imported_modules,
+            SCRIPT_PATH=SCRIPT_PATH,
+            vk_session=vk_session,
+            event=event,
+        )
 
 
 while True:
-    try:
-        for event in vk_long_poll.listen():
+    # try:
+    # modules_react_tasks = []
+    # modules_execution_event_loop = asyncio.new_event_loop()
 
-            event_type = str(event.type)
-            event_confidential = not event.from_group
-            should_reatc_on_event = event_type in events_codes_white_list
+    for event in vk_long_poll.listen():
+        # modules_react_tasks.append(
+        #     modules_execution_event_loop.create_task(
+        react_on_event(event=event, SCRIPT_PATH=SCRIPT_PATH, vk_session=vk_session)
+    #     )
+    # )
 
-            if not should_reatc_on_event:  # and event_confidential:
-                continue
+    # wait_tasks = asyncio.wait(modules_react_tasks)
+    # modules_execution_event_loop.run_until_complete(wait_tasks)
+    # modules_execution_event_loop.close()
 
-            react_on_event(
-                imported_modules=imported_modules,
-                SCRIPT_PATH=SCRIPT_PATH,
-                vk_session=vk_session,
-                event=event,
-            )
-    except Exception:
-        vk_session = VkApi(token=VK_TOKEN)
-        vk_long_poll = VkLongPoll(vk_session)
+
+# except Exception:
+#     vk_session = VkApi(token=VK_TOKEN)
+#     vk_long_poll = VkLongPoll(vk_session)
