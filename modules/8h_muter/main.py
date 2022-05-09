@@ -1,7 +1,9 @@
-from vk_api.exceptions import Captcha
-
 import random
 
+# exceptions for vk_longpoll reloading
+from vk_api.exceptions import Captcha
+
+# backend default modules
 from back.config_manager import get_config
 
 CONFIG = None

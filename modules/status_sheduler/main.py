@@ -1,5 +1,6 @@
 from datetime import datetime
 
+# backend default modules
 from back.config_manager import get_config, set_config
 
 
@@ -38,7 +39,8 @@ async def module_execute(SCRIPT_PATH, event, vk_session):
     # casing the command
     if event.message.strip().lower() == "vk_modules status":
         reply_message = ""
-        reply_message += bot_prefix + "APP:vk_modules  🕐" + date + "\n"
+        reply_message += bot_prefix + "APP : vk_modules\n"
+        reply_message += bot_prefix + "🕐 " + date + "\n"
         reply_message += bot_prefix + "\tEverything is fine\n" + bot_prefix + "\n"
         reply_message += bot_prefix + "\tThanks for asking"
 
