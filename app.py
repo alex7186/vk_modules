@@ -1,3 +1,4 @@
+import time
 from vk_api import VkApi
 from vk_api.longpoll import VkLongPoll
 import os
@@ -31,6 +32,7 @@ start_modules(
 def get_vk_variables(VK_TOKEN):
     vk_session = VkApi(token=VK_TOKEN)
     vk_long_poll = VkLongPoll(vk_session)
+    print("vk_session and vk_long_poll are (re)generated")
 
     return vk_session, vk_long_poll
 
@@ -57,3 +59,4 @@ while True:
     # so that its necessary to update vk_session and vk_longpoll variables
     except (timeout, ReadTimeoutError, ReadTimeout):
         vk_session, vk_long_poll = get_vk_variables(VK_TOKEN)
+        time.wait(5)

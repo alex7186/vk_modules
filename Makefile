@@ -31,7 +31,7 @@ setup:
 	@echo "\n✅ done!"
 
 status:
-	-@systemctl --user status $(app_name).service
+	-@systemctl --user status $(app_name).service | cat
 
 service-copy:
 	@echo "\n⚙️  moving service to config folder...\n"
@@ -51,11 +51,9 @@ service-cat:
 	@cat ~/.config/systemd/user/$(app_name).service
 
 start:
-	@# @$(MAKE) service-start
-	@# @sleep 2
-	@# @$(MAKE) status
-
-	python3 -u ~/scripts/vk_modules/app.py
+	@$(MAKE) service-start
+	@sleep 2
+	@$(MAKE) status
 
 stop:
 	@$(MAKE) service-stop
