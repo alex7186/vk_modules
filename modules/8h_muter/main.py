@@ -1,4 +1,5 @@
-from datetime import datetime
+from vk_api.exceptions import Captcha
+
 import random
 
 from back.config_manager import get_config
@@ -17,7 +18,7 @@ async def module_start(SCRIPT_PATH):
 
 async def module_execute(SCRIPT_PATH, event, vk_session):
     global CONFIG
-    # try:
+
     message_from_target_user = str(event.user_id) in CONFIG["vk_ids_to_restrict"]
     correct_time = (event.datetime.hour >= 20) or (event.datetime.hour <= 8)
 
@@ -32,15 +33,16 @@ async def module_execute(SCRIPT_PATH, event, vk_session):
             },
         )
 
-        if random.randint(0, 30) > 20:
-            vk_session.method(
-                method="messages.send",
-                values={
-                    "peer_id": event.user_id,
-                    "random_id": 0,
-                    "message": "TypeError: '<' not supported between instances of 'NoneType' and 'int'",
-                },
-            )
+        try:
+            if random.randint(0, 30) > 20:
+                vk_session.method(
+                    method="messages.send",
+                    values={
+                        "peer_id": event.user_id,
+                        "random_id": 0,
+                        "message": "TypeError: '<' not supported between instances of 'NoneType' and 'int'",
+                    },
+                )
 
-    # except AttributeError:
-    #     pass
+        except Captcha:
+            pass

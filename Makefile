@@ -51,9 +51,11 @@ service-cat:
 	@cat ~/.config/systemd/user/$(app_name).service
 
 start:
-	@$(MAKE) service-start
-	@sleep 2
-	@$(MAKE) status
+	@# @$(MAKE) service-start
+	@# @sleep 2
+	@# @$(MAKE) status
+
+	python3 -u ~/scripts/vk_modules/app.py
 
 stop:
 	@$(MAKE) service-stop
