@@ -10,7 +10,7 @@ push:
 	@echo "\n⚙️  pushing to git...\n"
 	@git add .
 	@git commit -m $(commit_name)
-	@echo "\n⚙️ pushing as $(commit_name)"
+	echo "\n⚙️ pushing as $(commit_name)"
 	@git push origin main || true
 	@echo "\n✅ done!"
 
