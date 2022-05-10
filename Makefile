@@ -13,7 +13,17 @@ push:
 	@echo "\n⚙️ pushing as $(commit_name)"
 	@git push origin main
 	@echo "\n✅ done!"
-	
+
+push-force:
+	@cd $(path)
+	@echo "\n🧹 cleaning the code...\n"
+	@python -m black .
+	@echo "\n⚙️  pushing to git...\n"
+	@git add .
+	@git commit -m $(commit_name)
+	@echo "\n🚩 FORCE 🚩 pushing as $(commit_name)"
+	@git push --force origin main
+	@echo "\n✅ done!"
 	
 setup:
 	@echo "\n⚙️  making user config folders...\n"
