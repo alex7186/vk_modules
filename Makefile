@@ -54,9 +54,9 @@ service-stop:
 	@echo "\n❌  service stopped\n"
 
 service-start:
-	# -@systemctl --user restart $(app_name).service
-	# @echo "\n✅  service started\n"
-	python3 app.py
+	-@systemctl --user restart $(app_name).service
+	@echo "\n✅  service started\n"
+	@#python3 app.py
 
 service-cat:
 	@cat ~/.config/systemd/user/$(app_name).service

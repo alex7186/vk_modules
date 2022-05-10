@@ -2,7 +2,7 @@ from datetime import datetime
 
 # backend default modules
 from back.config_manager import get_config
-from vk_modules.back.vk_manager import edit_vk_message
+from back.vk_manager import edit_vk_message
 
 
 full_file_path = None
