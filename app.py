@@ -49,7 +49,7 @@ vk_session, vk_long_poll = get_vk_variables(VK_TOKEN)
 
 while True:
     try:
-        for event in [*vk_long_poll.listen()]:
+        for event in vk_long_poll.listen():
             # checking if the event is valueable
             should_react_on_event = str(event.type) in CONFIG["events_codes_white_list"]
 

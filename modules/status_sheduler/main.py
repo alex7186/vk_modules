@@ -1,8 +1,8 @@
 from datetime import datetime
-from vk_api.exceptions import Captcha
 
 # backend default modules
 from back.config_manager import get_config
+from vk_modules.back.vk_manager import edit_vk_message
 
 
 full_file_path = None
@@ -46,15 +46,11 @@ async def module_execute(SCRIPT_PATH, event, vk_session):
         reply_message += bot_prefix + "\n"
         reply_message += bot_prefix + "\tThanks for asking"
 
-        try:
-            vk_session.method(
-                method="messages.send",
-                values={
-                    "peer_id": CONFIG["vk_master_id"],
-                    "message": reply_message,
-                    "random_id": 0,
-                },
-            )
-            print(MODULE_NAME, ":", date, ": Status message sent")
-        except Captcha:
-            print(MODULE_NAME, ":", date, ": Captcha error occured")
+        edit_vk_message(
+            vk_session=vk_session,
+            peer_id=CONFIG["vk_master_id"],
+            new_message=reply_message,
+            old_message_id=event.message_id,
+        )
+
+        print(MODULE_NAME, ":", date, ": Status message edited")
