@@ -9,9 +9,9 @@ push:
 	@python -m black .
 	@echo "\n⚙️  pushing to git...\n"
 	@git add .
-	@git commit -m $(commit_name)
-	echo "\n⚙️ pushing as $(commit_name)"
-	@git push origin main || true
+	-@git commit -m $(commit_name)
+	@echo "\n⚙️ pushing as $(commit_name)"
+	@git push origin main
 	@echo "\n✅ done!"
 
 push-force:
@@ -20,7 +20,7 @@ push-force:
 	@python -m black .
 	@echo "\n⚙️  pushing to git...\n"
 	@git add .
-	@git commit -m $(commit_name)
+	-@git commit -m $(commit_name)
 	@echo "\n🚩 FORCE 🚩 pushing as $(commit_name)"
 	@git push --force origin main
 	@echo "\n✅ done!"
