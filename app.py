@@ -1,3 +1,4 @@
+from datetime import datetime
 import time
 from vk_api import VkApi
 from vk_api.longpoll import VkLongPoll
@@ -17,6 +18,7 @@ SCRIPT_PATH = "/".join(os.path.realpath(__file__).split("/")[:-1])
 
 CONFIG = get_config(SCRIPT_PATH)
 VK_TOKEN = get_token(SCRIPT_PATH)
+APP_NAME = CONFIG["APP_NAME"]
 
 
 # importing inlisted modules with importlib
@@ -32,7 +34,12 @@ start_modules(
 def get_vk_variables(VK_TOKEN):
     vk_session = VkApi(token=VK_TOKEN)
     vk_long_poll = VkLongPoll(vk_session)
-    print("vk_session and vk_long_poll are (re)generated")
+
+    date = ".".join(str(el) for el in list(datetime.now().date().timetuple())[:3][::-1])
+    time = str(datetime.now().time()).split(".")[0]
+    date = time + " " + date
+
+    print(APP_NAME, ":", date, ": Session variables are (re)generated")
 
     return vk_session, vk_long_poll
 
@@ -42,7 +49,7 @@ vk_session, vk_long_poll = get_vk_variables(VK_TOKEN)
 
 while True:
     try:
-        for event in vk_long_poll.listen():
+        for event in [*vk_long_poll.listen()]:
             # checking if the event is valueable
             should_react_on_event = str(event.type) in CONFIG["events_codes_white_list"]
 
@@ -59,4 +66,4 @@ while True:
     # so that its necessary to update vk_session and vk_longpoll variables
     except (timeout, ReadTimeoutError, ReadTimeout):
         vk_session, vk_long_poll = get_vk_variables(VK_TOKEN)
-        time.wait(5)
+        time.sleep(5)

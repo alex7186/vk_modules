@@ -1,4 +1,5 @@
 import asyncio
+from datetime import datetime
 from importlib import import_module
 
 
@@ -27,7 +28,16 @@ def start_modules(imported_modules, SCRIPT_PATH, print_messages=True, modules_li
             )
         )
         if print_messages:
-            print(f"imported {modules_list[i]}")
+
+            APP_NAME = "import_manager"
+            date = ".".join(
+                str(el) for el in list(datetime.now().date().timetuple())[:3][::-1]
+            )
+            time = str(datetime.now().time()).split(".")[0]
+            date = time + " " + date
+
+            print(APP_NAME, ":", date, f": Imported {modules_list[i]}")
+            print()
 
     wait_tasks = asyncio.wait(tasks)
 

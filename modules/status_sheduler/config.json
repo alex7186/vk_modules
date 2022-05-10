@@ -1,4 +1,5 @@
 {
     "vk_master_id" : "249274091",
-    "bot_prefix" : "-> "
+    "bot_prefix" : "-> ",
+    "MODULE_NAME" : "status_sheduler"
 }
