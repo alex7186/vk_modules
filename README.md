@@ -1,5 +1,5 @@
 # vk_modules
-this script is designed to solve the problem that arises when you need to connect several simple (or not simple) scripts to one vk_api token
+this script is designed to solve the problem that arises when you need to connect several simple (or more complex) scripts to one vk_api token
 
 for this, scripts are presented in the form of modules for the vk_modules program
 
@@ -47,7 +47,7 @@ this module is engaged in logging incoming and outgoing messages for subsequent 
 logs are contained in <PATH_TO_PROJET_DIR>/modules/message_logger/misc.json
 
 ### status_sheduler module
-this module is designed to monitor the health of the vk_modules script
+this module is designed to monitor the status of the vk_modules script
 
 this module responds with the given message to the entered command (stored in it`s main.py file)
 (you need to use "Избранное" dialog for this)
