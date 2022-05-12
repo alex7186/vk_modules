@@ -1,8 +1,10 @@
 from datetime import datetime
+import asyncio
 
 # backend default modules
 from back.config_manager import get_config
 from back.vk_manager import edit_vk_message
+from back.vk_manager import delete_vk_message_api
 
 
 full_file_path = None
@@ -17,6 +19,8 @@ async def module_start(SCRIPT_PATH):
 
 async def module_execute(SCRIPT_PATH, event, vk_session):
     global CONFIG
+
+    vk_session_api = vk_session.get_api()
 
     date = ".".join(str(el) for el in list(datetime.now().date().timetuple())[:3][::-1])
     time = str(datetime.now().time()).split(".")[0]
@@ -46,11 +50,19 @@ async def module_execute(SCRIPT_PATH, event, vk_session):
         reply_message += bot_prefix + "\n"
         reply_message += bot_prefix + "\tThanks for asking"
 
-        edit_vk_message(
+        edit_res = edit_vk_message(
             vk_session=vk_session,
             peer_id=CONFIG["vk_master_id"],
             new_message=reply_message,
             old_message_id=event.message_id,
         )
+        print(MODULE_NAME, ": Status message sent")
 
-        print(MODULE_NAME, ":", date, ": Status message edited")
+        await asyncio.sleep(5)
+
+        delete_vk_message_api(
+            vk_session_api=vk_session_api,
+            peer_id=CONFIG["vk_master_id"],
+            message_ids=event.message_id,
+        )
+        print(MODULE_NAME, ": Status message deleted")

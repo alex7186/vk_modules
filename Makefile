@@ -31,7 +31,7 @@ setup:
 	-@mkdir ~/.config/systemd
 	-@mkdir ~/.config/systemd/user
 	
-	@$(MAKE) service-copy
+	@$(MAKE) copy-service
 
 	@cd $(path)
 	@echo "\n📝  installing dependencies...\n"
@@ -43,28 +43,30 @@ setup:
 status:
 	-@systemctl --user status $(app_name).service | cat
 
-service-copy:
+copy-service:
 	@echo "\n⚙️  moving service to config folder...\n"
 	@sudo cp $(path)/service/$(app_name).service ~/.config/systemd/user/$(app_name).service
 	@systemctl --user daemon-reload
 	@echo "\n✅ done!"
 
-service-stop:
+stop-service:
 	-@systemctl --user stop $(app_name).service
 	@echo "\n❌  service stopped\n"
 
-service-start:
+start-service:
 	-@systemctl --user restart $(app_name).service
 	@echo "\n✅  service started\n"
-	@#python3 app.py
+
+start-python:
+	@python3 ~/scripts/vk_modules/app.py
 
 service-cat:
 	@cat ~/.config/systemd/user/$(app_name).service
 
 start:
-	@$(MAKE) service-start
+	@$(MAKE) start-service
 	@sleep 2
 	@$(MAKE) status
 
 stop:
-	@$(MAKE) service-stop
+	@$(MAKE) stop-service

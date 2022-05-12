@@ -36,7 +36,7 @@ def start_modules(imported_modules, SCRIPT_PATH, print_messages=True, modules_li
             time = str(datetime.now().time()).split(".")[0]
             date = time + " " + date
 
-            print(APP_NAME, ":", date, f": Imported {modules_list[i]}")
+            print(APP_NAME, f": Imported {modules_list[i]}")
             print()
 
     wait_tasks = asyncio.wait(tasks)

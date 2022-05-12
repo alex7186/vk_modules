@@ -35,11 +35,11 @@ def get_vk_variables(VK_TOKEN):
     vk_session = VkApi(token=VK_TOKEN)
     vk_long_poll = VkLongPoll(vk_session)
 
-    date = ".".join(str(el) for el in list(datetime.now().date().timetuple())[:3][::-1])
-    time = str(datetime.now().time()).split(".")[0]
-    date = time + " " + date
+    # date = ".".join(str(el) for el in list(datetime.now().date().timetuple())[:3][::-1])
+    # time = str(datetime.now().time()).split(".")[0]
+    # date = time + " " + date
 
-    print(APP_NAME, ":", date, ": Session variables are (re)generated")
+    print(APP_NAME, ": Session variables are (re)generated")
 
     return vk_session, vk_long_poll
 
@@ -67,3 +67,6 @@ while True:
     except (timeout, ReadTimeoutError, ReadTimeout):
         vk_session, vk_long_poll = get_vk_variables(VK_TOKEN)
         time.sleep(5)
+
+    except TypeError:
+        pass
