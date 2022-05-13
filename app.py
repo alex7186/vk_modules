@@ -1,4 +1,3 @@
-from datetime import datetime
 import time
 from vk_api import VkApi
 from vk_api.longpoll import VkLongPoll
@@ -45,7 +44,6 @@ def get_vk_variables(VK_TOKEN):
 
 
 vk_session, vk_long_poll = get_vk_variables(VK_TOKEN)
-
 
 while True:
     try:

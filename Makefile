@@ -36,37 +36,43 @@ setup:
 	@cd $(path)
 	@echo "\n📝  installing dependencies...\n"
 	@pip3 install -r ./misc/requirements.txt
-	@echo "\n📅  adding service to systemd...\n"
-	@systemctl --user enable $(app_name).service
+	
 	@echo "\n✅ done!"
 
 status:
-	-@systemctl --user status $(app_name).service | cat
+	-@systemctl --user status $(app_name) | cat
 
 copy-service:
 	@echo "\n⚙️  moving service to config folder...\n"
 	@sudo cp $(path)/service/$(app_name).service ~/.config/systemd/user/$(app_name).service
-	@systemctl --user daemon-reload
 	@echo "\n✅ done!"
 
-stop-service:
-	-@systemctl --user stop $(app_name).service
+_stop-service:
+	-@systemctl --user stop $(app_name)
+	-@systemctl --user disable $(app_name)
 	@echo "\n❌  service stopped\n"
 
-start-service:
-	-@systemctl --user restart $(app_name).service
+_start-service:
+	@echo "\n📅  adding service to systemd...\n"
+	@systemctl --user restart $(app_name)
 	@echo "\n✅  service started\n"
+
+reload-service:
+	-@systemctl --user daemon-reload
+	-@systemctl --user enable $(app_name)
 
 start-python:
 	@python3 ~/scripts/vk_modules/app.py
 
-service-cat:
-	@cat ~/.config/systemd/user/$(app_name).service
+cat-service:
+	@systemctl --user cat $(app_name)
+
+cat-log:
+	@journalctl --user-unit $(app_name) | less
 
 start:
-	@$(MAKE) start-service
-	@sleep 2
+	@$(MAKE) _start-service
 	@$(MAKE) status
 
 stop:
-	@$(MAKE) stop-service
+	@$(MAKE) _stop-service
