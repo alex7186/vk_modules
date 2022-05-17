@@ -12,6 +12,7 @@ from requests.exceptions import ReadTimeout
 from back.token_manager import get_token
 from back.config_manager import get_config
 from back.import_manager import import_modules, start_modules, execute_modules
+from back.print_manager import m_print
 
 SCRIPT_PATH = "/".join(os.path.realpath(__file__).split("/")[:-1])
 
@@ -30,7 +31,7 @@ def get_vk_variables(VK_TOKEN):
     vk_session_api = vk_session.get_api()
     vk_long_poll = VkLongPoll(vk_session)
 
-    print(APP_NAME, ": Session variables are (re)generated")
+    m_print(APP_NAME, ": Session variables are (re)generated")
 
     return vk_session_api, vk_long_poll
 

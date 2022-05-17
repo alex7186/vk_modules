@@ -2,6 +2,8 @@ import asyncio
 from datetime import datetime
 from importlib import import_module
 
+from print_manager import m_print
+
 
 def import_modules(modules_list):
     # import all "main.py" files by template <SCRIPT_PATH>/modules/module_1/main.py
@@ -38,8 +40,7 @@ def start_modules(imported_modules, SCRIPT_PATH, vk_session_api, modules_list=[]
         time = str(datetime.now().time()).split(".")[0]
         date = time + " " + date
 
-        print(APP_NAME, f": Imported {modules_list[i]}")
-        print()
+        m_print(APP_NAME, f": Imported {modules_list[i]}")
 
     wait_tasks = asyncio.wait(tasks)
 

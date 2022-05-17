@@ -5,16 +5,24 @@ path = $(CURDIR)
 
 service-path = /etc/systemd/system
 
-_black:
-	@cd $(path)
-	@echo "\n🧹 cleaning the code...\n"
-	@python -m black .
+setup:
+	@$(MAKE) copy-service
 
-_git_commit:
 	@cd $(path)
-	@echo "\n⚙️  pushing to git...\n"
-	@git add .
-	-@git commit -m $(commit_name)
+	@echo "\n📝  installing dependencies...\n"
+	@pip3 install -r ./misc/requirements.txt
+	
+	@echo "\n✅ done!"
+
+status:
+	-@systemctl status non-user-$(app_name) | cat
+
+start:
+	@$(MAKE) _start-service
+	@$(MAKE) status
+
+stop:
+	@$(MAKE) _stop-service
 
 push:
 	@$(MAKE) _black
@@ -37,6 +45,12 @@ copy-service:
 	@$(MAKE) _reload-restart-service
 	@echo "\n✅  done!"
 
+cat-service:
+	@systemctl cat non-user-$(app_name)
+
+cat-log:
+	@journalctl --unit=non-user-vk_modules.service
+
 _stop-service:
 	-@systemctl stop non-user-$(app_name)
 	@echo "\n❌  service stopped\n"
@@ -53,31 +67,13 @@ _reload-restart-service:
 	-@systemctl enable non-user-$(app_name)
 	-@systemctl restart non-user-$(app_name)
 
-start-python:
+_black:
 	@cd $(path)
-	@python3 app.py
+	@echo "\n🧹 cleaning the code...\n"
+	@python -m black .
 
-# cat-service:
-# 	@systemctl --user cat $(app_name)
-
-# cat-log:
-# 	@journalctl --user-unit $(app_name) | less
-
-setup:
-	@$(MAKE) copy-service
-
+_git_commit:
 	@cd $(path)
-	@echo "\n📝  installing dependencies...\n"
-	@pip3 install -r ./misc/requirements.txt
-	
-	@echo "\n✅ done!"
-
-status:
-	-@systemctl status non-user-$(app_name) | cat
-
-start:
-	@$(MAKE) _start-service
-	@$(MAKE) status
-
-stop:
-	@$(MAKE) _stop-service
+	@echo "\n⚙️  pushing to git...\n"
+	@git add .
+	-@git commit -m $(commit_name)

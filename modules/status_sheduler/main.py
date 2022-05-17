@@ -6,6 +6,7 @@ from back.config_manager import get_config
 from back.vk_manager import edit_vk_message_api
 from back.vk_manager import send_vk_message_api
 from back.vk_manager import delete_vk_message_api
+from back.print_manager import m_print
 
 
 CONFIG = None
@@ -61,7 +62,7 @@ async def module_execute(SCRIPT_PATH, event, vk_session_api):
             new_message=reply_message,
             old_message_id=event.message_id,
         )
-        print(MODULE_NAME, ": Status message sent")
+        m_print(MODULE_NAME, ": Status message sent")
 
         await asyncio.sleep(5)
 
@@ -70,4 +71,4 @@ async def module_execute(SCRIPT_PATH, event, vk_session_api):
             peer_id=CONFIG["vk_master_id"],
             message_ids=event.message_id,
         )
-        print(MODULE_NAME, ": Status message deleted")
+        m_print(MODULE_NAME, ": Status message deleted")
