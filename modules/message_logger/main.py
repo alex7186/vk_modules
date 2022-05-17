@@ -1,7 +1,7 @@
 import logging
 
 
-async def module_start(SCRIPT_PATH):
+async def module_start(SCRIPT_PATH, vk_session_api):
     logging.basicConfig(
         filename=f"{SCRIPT_PATH}/modules/message_logger/logfile.txt",
         filemode="a",
@@ -11,7 +11,7 @@ async def module_start(SCRIPT_PATH):
     )
 
 
-async def module_execute(SCRIPT_PATH, event, vk_session):
+async def module_execute(SCRIPT_PATH, event, vk_session_api):
     event_type_new_message = str(event.type) == "VkEventType.MESSAGE_NEW"
     event_from_user = event.from_user
 

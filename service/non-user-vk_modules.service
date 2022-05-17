@@ -1,14 +1,13 @@
 [Unit]
-After=multi-user.target
+After=network.target  
+Wants=network.target
 
 [Service]
-WorkingDirectory=/home/pi/scripts/vk_modules
 Type=simple
+User=pi
 ExecStart=/bin/sh /home/pi/scripts/vk_modules/service/starter.sh
-RemainAfterExit=yes
-TimeoutStartSec=0
+WorkingDirectory=/home/pi/scripts/vk_modules
 Restart=always
-RestartSec=3s
 
 [Install]
 WantedBy=multi-user.target

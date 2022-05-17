@@ -22,28 +22,27 @@ APP_NAME = CONFIG["APP_NAME"]
 
 # importing inlisted modules with importlib
 imported_modules = import_modules(modules_list=CONFIG["loaded_modules"])
+
+
+def get_vk_variables(VK_TOKEN):
+    time.sleep(6)
+    vk_session = VkApi(token=VK_TOKEN)
+    vk_session_api = vk_session.get_api()
+    vk_long_poll = VkLongPoll(vk_session)
+
+    print(APP_NAME, ": Session variables are (re)generated")
+
+    return vk_session_api, vk_long_poll
+
+
+vk_session_api, vk_long_poll = get_vk_variables(VK_TOKEN)
 # executing the `setup` method of every module
 start_modules(
     imported_modules=imported_modules,
     SCRIPT_PATH=SCRIPT_PATH,
     modules_list=CONFIG["loaded_modules"],
+    vk_session_api=vk_session_api,
 )
-
-
-def get_vk_variables(VK_TOKEN):
-    vk_session = VkApi(token=VK_TOKEN)
-    vk_long_poll = VkLongPoll(vk_session)
-
-    # date = ".".join(str(el) for el in list(datetime.now().date().timetuple())[:3][::-1])
-    # time = str(datetime.now().time()).split(".")[0]
-    # date = time + " " + date
-
-    print(APP_NAME, ": Session variables are (re)generated")
-
-    return vk_session, vk_long_poll
-
-
-vk_session, vk_long_poll = get_vk_variables(VK_TOKEN)
 
 while True:
     try:
@@ -56,7 +55,7 @@ while True:
                 execute_modules(
                     imported_modules=imported_modules,
                     SCRIPT_PATH=SCRIPT_PATH,
-                    vk_session=vk_session,
+                    vk_session_api=vk_session_api,
                     event=event,
                 )
 
@@ -64,7 +63,9 @@ while True:
     # so that its necessary to update vk_session and vk_longpoll variables
     except (timeout, ReadTimeoutError, ReadTimeout):
         vk_session, vk_long_poll = get_vk_variables(VK_TOKEN)
-        time.sleep(5)
 
     except TypeError:
+        pass
+
+    except OSError:
         pass

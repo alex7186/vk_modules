@@ -1,4 +1,4 @@
 python-crontab==2.6.0
 black==22.3.0
 vk-api==11.9.4
-logging==0.4.9.6
+logging
