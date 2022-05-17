@@ -19,23 +19,23 @@ _git_commit:
 push:
 	@$(MAKE) _black
 	@$(MAKE) _git_commit
-	@echo "\n⚙️ pushing as $(commit_name)"
+	@echo "\n⚙️  pushing as $(commit_name)\n"
 	@git push origin main
-	@echo "\n✅ done!"
+	@echo "\n✅  done!"
 
 push-force:
 	@$(MAKE) _black
 	@$(MAKE) _git_commit
-	@echo "\n⚙️ 🚩FORCE🚩 pushing as $(commit_name)"
+	@echo "\n⚙️  🚩FORCE🚩  pushing as $(commit_name)\n"
 	@git push --force origin main
-	@echo "\n✅ done!"
+	@echo "\n✅  done!"
 	
 copy-service:
-	@echo "\n⚙️  moving service to $(service-path) \n"
+	@echo "\n⚙️  moving service to $(service-path)\n"
 	@sudo cp $(path)/service/$(app_name).service $(non-user-service-path)/non-user-$(app_name).service
 	@echo "\n⚙️  enabling service \n"
 	@$(MAKE) _reload-restart-service
-	@echo "\n✅ done!"
+	@echo "\n✅  done!"
 
 _stop-service:
 	-@systemctl stop non-user-$(app_name)
