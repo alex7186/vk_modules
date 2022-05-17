@@ -2,7 +2,7 @@ import asyncio
 from datetime import datetime
 from importlib import import_module
 
-from print_manager import m_print
+from back.print_manager import m_print
 
 
 def import_modules(modules_list):

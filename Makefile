@@ -6,12 +6,13 @@ path = $(CURDIR)
 service-path = /etc/systemd/system
 
 setup:
-	@$(MAKE) copy-service
-
 	@cd $(path)
 	@echo "\n📝  installing dependencies...\n"
 	@pip3 install -r ./misc/requirements.txt
-	
+	@sudo apt-get install python3-systemd
+
+	@$(MAKE) copy-service
+
 	@echo "\n✅ done!"
 
 status:
@@ -23,6 +24,9 @@ start:
 
 stop:
 	@$(MAKE) _stop-service
+
+restart-service:
+	-@systemctl restart non-user-$(app_name)
 
 push:
 	@$(MAKE) _black
@@ -42,7 +46,8 @@ copy-service:
 	@echo "\n⚙️  moving service to $(service-path)\n"
 	@sudo cp $(path)/service/$(app_name).service $(non-user-service-path)/non-user-$(app_name).service
 	@echo "\n⚙️  enabling service \n"
-	@$(MAKE) _reload-restart-service
+	-@systemctl daemon-reload
+	-@systemctl enable non-user-$(app_name)
 	@echo "\n✅  done!"
 
 cat-service:
@@ -60,12 +65,6 @@ _start-service:
 	
 	@systemctl restart non-user-$(app_name)
 	@echo "\n✅  service started\n"
-
-
-_reload-restart-service:
-	-@systemctl daemon-reload
-	-@systemctl enable non-user-$(app_name)
-	-@systemctl restart non-user-$(app_name)
 
 _black:
 	@cd $(path)
