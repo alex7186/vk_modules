@@ -12,7 +12,6 @@ from requests.exceptions import ReadTimeout
 from back.token_manager import get_token
 from back.config_manager import get_config
 from back.import_manager import import_modules, start_modules, execute_modules
-from back.print_manager import m_print
 
 SCRIPT_PATH = "/".join(os.path.realpath(__file__).split("/")[:-1])
 
@@ -25,18 +24,19 @@ APP_NAME = CONFIG["APP_NAME"]
 imported_modules = import_modules(modules_list=CONFIG["loaded_modules"])
 
 
-def get_vk_variables(VK_TOKEN):
-    time.sleep(6)
+def get_vk_variables(VK_TOKEN, first_start=False):
+    if not first_start:
+        time.sleep(6)
     vk_session = VkApi(token=VK_TOKEN)
     vk_session_api = vk_session.get_api()
     vk_long_poll = VkLongPoll(vk_session)
 
-    m_print(APP_NAME, ": Session variables are (re)generated")
+    print(APP_NAME, ": Session variables are (re)generated")
 
     return vk_session_api, vk_long_poll
 
 
-vk_session_api, vk_long_poll = get_vk_variables(VK_TOKEN)
+vk_session_api, vk_long_poll = get_vk_variables(VK_TOKEN, first_start=True)
 # executing the `setup` method of every module
 start_modules(
     imported_modules=imported_modules,
@@ -47,26 +47,31 @@ start_modules(
 
 while True:
     try:
-        for event in vk_long_poll.listen():
-            # checking if the event is valueable
-            should_react_on_event = str(event.type) in CONFIG["events_codes_white_list"]
 
-            if should_react_on_event:
-                # executing modules
-                execute_modules(
-                    imported_modules=imported_modules,
-                    SCRIPT_PATH=SCRIPT_PATH,
-                    vk_session_api=vk_session_api,
-                    event=event,
+        for event in vk_long_poll.listen():
+            try:
+
+                # checking if the event is valueable
+                should_react_on_event = (
+                    str(event.type) in CONFIG["events_codes_white_list"]
                 )
+
+                if should_react_on_event:
+                    # executing modules
+                    execute_modules(
+                        imported_modules=imported_modules,
+                        SCRIPT_PATH=SCRIPT_PATH,
+                        vk_session_api=vk_session_api,
+                        event=event,
+                    )
+
+            except TypeError:
+                pass
+
+            except OSError:
+                pass
 
     # sometimes the longpoll timeout error occure
     # so that its necessary to update vk_session and vk_longpoll variables
     except (timeout, ReadTimeoutError, ReadTimeout):
         vk_session, vk_long_poll = get_vk_variables(VK_TOKEN)
-
-    except TypeError:
-        pass
-
-    except OSError:
-        pass

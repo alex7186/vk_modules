@@ -1,0 +1,1 @@
+{"buildTargets":["_black","_git_commit","_start-service","_stop-service","cat-log","cat-service","copy-service","push","push-force","restart-service","setup","start","status","stop"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}

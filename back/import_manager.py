@@ -2,7 +2,7 @@ import asyncio
 from datetime import datetime
 from importlib import import_module
 
-from back.print_manager import m_print
+from back.print_manager import mprint
 
 
 def import_modules(modules_list):
@@ -40,7 +40,7 @@ def start_modules(imported_modules, SCRIPT_PATH, vk_session_api, modules_list=[]
         time = str(datetime.now().time()).split(".")[0]
         date = time + " " + date
 
-        m_print(APP_NAME, f": Imported {modules_list[i]}")
+        mprint(APP_NAME + " " + f": Imported {modules_list[i]}")
 
     wait_tasks = asyncio.wait(tasks)
 

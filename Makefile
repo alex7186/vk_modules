@@ -11,22 +11,22 @@ setup:
 	@pip3 install -r ./misc/requirements.txt
 	@sudo apt-get install python3-systemd
 
-	@$(MAKE) copy-service
+	@$(MAKE) --no-print-directory copy-service
 
-	@echo "\n✅ done!"
+	@echo "\n✅ setup complete!"
 
 status:
-	-@systemctl status non-user-$(app_name) | cat
+	-@systemctl status $(app_name) | cat
 
 start:
-	@$(MAKE) _start-service
-	@$(MAKE) status
+	@$(MAKE) --no-print-directory _start-service
+	@$(MAKE) --no-print-directory status
 
 stop:
 	@$(MAKE) _stop-service
 
 restart-service:
-	-@systemctl restart non-user-$(app_name)
+	-@systemctl restart $(app_name)
 
 push:
 	@$(MAKE) _black
@@ -44,26 +44,26 @@ push-force:
 	
 copy-service:
 	@echo "\n⚙️  moving service to $(service-path)\n"
-	@sudo cp $(path)/service/$(app_name).service $(non-user-service-path)/non-user-$(app_name).service
+	@sudo cp $(path)/service/$(app_name).service $(service-path)/$(app_name).service
 	@echo "\n⚙️  enabling service \n"
 	-@systemctl daemon-reload
-	-@systemctl enable non-user-$(app_name)
+	-@systemctl enable $(app_name)
 	@echo "\n✅  done!"
 
 cat-service:
-	@systemctl cat non-user-$(app_name)
+	@systemctl cat $(app_name)
 
 cat-log:
-	@journalctl --unit=non-user-vk_modules.service
+	@journalctl --unit=vk_modules.service
 
 _stop-service:
-	-@systemctl stop non-user-$(app_name)
+	-@systemctl stop $(app_name)
 	@echo "\n❌  service stopped\n"
 
 
 _start-service:
 	
-	@systemctl restart non-user-$(app_name)
+	@systemctl restart $(app_name)
 	@echo "\n✅  service started\n"
 
 _black:
