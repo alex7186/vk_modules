@@ -11,7 +11,7 @@ for this, scripts are presented in the form of modules for the vk_modules progra
 run following commands to put the systemd service
 to the right place, make systemctl stuff and get things ready to run:<br>
 
-`cd <PATH_TO_PROJET_DIR>`<br>
+`cd <PATH_TO_PROJECT_DIR>`<br>
 `make setup`
 > (make sure that the <PATH_TO_PROJET_DIR> is somewhere in user home folder)
 
@@ -24,7 +24,9 @@ to stop script:<br>
 # Setting configuration
 to insert telegram bot key:
 
-* make file token.txt and put your bot token into this file
+* make file <br>
+`<PATH_TO_PROJET_DIR>/token.txt`<br>
+and put your bot token into this file
 
 # Modules description
 each module is in its own folder inside the modules directory and has a main.py file.
@@ -41,12 +43,12 @@ functions arguments:
   
 to enable or disable modules one can edit `loaded_modules` in <PATH_TO_PROJET_DIR>/misc/config.json
   
-### message_logger module
+## message_logger module
 this module is engaged in logging incoming and outgoing messages for subsequent analytics using the logging library
 
 logs are contained in <PATH_TO_PROJET_DIR>/modules/message_logger/misc.json
 
-### status_sheduler module
+## status_sheduler module
 this module is designed to monitor the status of the vk_modules script
 
 this module responds with the given message to the entered command (stored in it`s main.py file)
