@@ -41,12 +41,12 @@ functions arguments:
 * `event` (only module_execute) - vk event (according to the black list of events from the file <br>
   <PATH_TO_PROJET_DIR>/misc/config.json
   
-to enable or disable modules one can edit `loaded_modules` in <PATH_TO_PROJET_DIR>/misc/config.json
+to enable or disable modules one can edit `loaded_modules` in `<PATH_TO_PROJET_DIR>/misc/config.json`
   
 ## message_logger module
 this module is engaged in logging incoming and outgoing messages for subsequent analytics using the logging library
 
-logs are contained in <PATH_TO_PROJET_DIR>/modules/message_logger/misc.json
+logs are contained in `<PATH_TO_PROJET_DIR>/modules/message_logger/misc.json`
 
 ## status_sheduler module
 this module is designed to monitor the status of the vk_modules script
