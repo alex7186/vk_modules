@@ -16,7 +16,7 @@ setup:
 	@echo "\n✅ setup complete!"
 
 status:
-	-@systemctl status $(app_name) | cat
+	-@systemctl --user status $(app_name) | cat
 
 start:
 	@$(MAKE) --no-print-directory _start-service
@@ -44,26 +44,26 @@ push-force:
 	
 copy-service:
 	@echo "\n⚙️  moving service to $(service-path)\n"
-	@sudo cp $(path)/service/$(app_name).service $(service-path)/$(app_name).service
+	@sudo cp $(path)/service/$(app_name).service ~/.config/systemd/user/$(app_name).service
 	@echo "\n⚙️  enabling service \n"
-	-@systemctl daemon-reload
-	-@systemctl enable $(app_name)
+	-@systemctl --user daemon-reload
+	-@systemctl --user enable $(app_name)
 	@echo "\n✅  done!"
 
 cat-service:
-	@systemctl cat $(app_name)
+	@systemctl --user cat $(app_name)
 
 cat-log:
-	@journalctl --unit=vk_modules.service
+	@journalctl --user --unit=vk_modules.service
 
 _stop-service:
-	-@systemctl stop $(app_name)
+	-@systemctl --user stop $(app_name)
 	@echo "\n❌  service stopped\n"
 
 
 _start-service:
 	
-	@systemctl restart $(app_name)
+	@systemctl --user restart $(app_name)
 	@echo "\n✅  service started\n"
 
 _black:

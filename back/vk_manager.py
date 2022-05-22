@@ -41,3 +41,7 @@ def set_vk_silent_api(vk_session_api, peer_id, timeout_seconds, sound_mute=0):
         time=timeout_seconds,
         sound=sound_mute,
     )
+
+
+def set_vk_account_online(vk_session_api):
+    vk_session_api.account.setOnline()

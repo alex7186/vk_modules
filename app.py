@@ -46,32 +46,36 @@ start_modules(
 )
 
 while True:
-    try:
+    # try:
 
-        for event in vk_long_poll.listen():
-            try:
+    for event in vk_long_poll.listen():
+        # try:
+        from back.vk_manager import send_vk_message_api
 
-                # checking if the event is valueable
-                should_react_on_event = (
-                    str(event.type) in CONFIG["events_codes_white_list"]
-                )
+        # send_vk_message_api(
+        #     vk_session_api=vk_session_api,
+        #     message=str(event.type),
+        #     peer_id=249274091
+        # )
+        # checking if the event is valueable
+        should_react_on_event = str(event.type) in CONFIG["events_codes_white_list"]
 
-                if should_react_on_event:
-                    # executing modules
-                    execute_modules(
-                        imported_modules=imported_modules,
-                        SCRIPT_PATH=SCRIPT_PATH,
-                        vk_session_api=vk_session_api,
-                        event=event,
-                    )
+        if should_react_on_event:
+            # executing modules
+            execute_modules(
+                imported_modules=imported_modules,
+                SCRIPT_PATH=SCRIPT_PATH,
+                vk_session_api=vk_session_api,
+                event=event,
+            )
 
-            except TypeError:
-                pass
+    # except TypeError:
+    #     pass
 
-            except OSError:
-                pass
+    # except OSError:
+    #     pass
 
-    # sometimes the longpoll timeout error occure
-    # so that its necessary to update vk_session and vk_longpoll variables
-    except (timeout, ReadTimeoutError, ReadTimeout):
-        vk_session, vk_long_poll = get_vk_variables(VK_TOKEN)
+# sometimes the longpoll timeout error occure
+# so that its necessary to update vk_session and vk_longpoll variables
+# except (timeout, ReadTimeoutError, ReadTimeout):
+#     vk_session, vk_long_poll = get_vk_variables(VK_TOKEN)

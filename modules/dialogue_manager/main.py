@@ -15,7 +15,7 @@ async def module_start(SCRIPT_PATH, vk_session_api):
     global CONFIG
 
     CONFIG = get_config(
-        full_file_path=f"{SCRIPT_PATH}/modules/status_sheduler/config.json"
+        full_file_path=f"{SCRIPT_PATH}/modules/dialogue_manager/config.json"
     )
 
     send_vk_message_api(
