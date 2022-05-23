@@ -1,4 +1,16 @@
 from vk_api.exceptions import Captcha
+from vk_api import VkApi
+from vk_api.longpoll import VkLongPoll
+
+
+def get_vk_variables(VK_TOKEN, first_start=False):
+    if not first_start:
+        time.sleep(6)
+    vk_session = VkApi(token=VK_TOKEN)
+    vk_session_api = vk_session.get_api()
+    vk_long_poll = VkLongPoll(vk_session)
+
+    return vk_session_api, vk_long_poll
 
 
 def send_vk_message_api(vk_session_api, peer_id, message):

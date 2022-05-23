@@ -7,8 +7,8 @@ Type=simple
 ExecStart=/bin/sh /home/pi/scripts/vk_modules/service/starter.sh
 WorkingDirectory=/home/pi/scripts/vk_modules
 Restart=always
-StandardOutput=/home/pi/scripts/vk_modules/temp/oul.log
-StandardError=/home/pi/scripts/vk_modules/temp/err.log
+# StandardOutput=journal+console
+StandardOutput=inherit
 
 [Install]
 WantedBy=multi-user.target

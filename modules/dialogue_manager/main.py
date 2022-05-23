@@ -18,12 +18,6 @@ async def module_start(SCRIPT_PATH, vk_session_api):
         full_file_path=f"{SCRIPT_PATH}/modules/dialogue_manager/config.json"
     )
 
-    send_vk_message_api(
-        vk_session_api=vk_session_api,
-        peer_id=CONFIG["vk_master_id"],
-        message=CONFIG["bot_prefix"] + "APP : vk_modules : started",
-    )
-
 
 async def module_execute(SCRIPT_PATH, event, vk_session_api):
     global CONFIG

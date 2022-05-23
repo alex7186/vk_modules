@@ -1,12 +1,12 @@
-today =`date '+%Y-%m-%d  %H:%M:%S'`
-commit_name = "autocommit $(today)"
+_today =`date '+%Y-%m-%d  %H:%M:%S'`
+_commit_name = "autocommit $(today)"
 app_name = vk_modules
-path = $(CURDIR)
+_path = $(CURDIR)
 
-service-path = /etc/systemd/system
+_service-path = ~/.config/systemd/user
 
 setup:
-	@cd $(path)
+	@cd $(_path)
 	@echo "\n📝  installing dependencies...\n"
 	@pip3 install -r ./misc/requirements.txt
 	@sudo apt-get install python3-systemd
@@ -20,6 +20,7 @@ status:
 
 start:
 	@$(MAKE) --no-print-directory _start-service
+	@sleep 3
 	@$(MAKE) --no-print-directory status
 
 stop:
@@ -31,20 +32,20 @@ restart-service:
 push:
 	@$(MAKE) _black
 	@$(MAKE) _git_commit
-	@echo "\n⚙️  pushing as $(commit_name)\n"
+	@echo "\n⚙️  pushing as $(_commit_name)\n"
 	@git push origin main
 	@echo "\n✅  done!"
 
 push-force:
 	@$(MAKE) _black
 	@$(MAKE) _git_commit
-	@echo "\n⚙️  🚩FORCE🚩  pushing as $(commit_name)\n"
+	@echo "\n⚙️  🚩FORCE🚩  pushing as $(_commit_name)\n"
 	@git push --force origin main
 	@echo "\n✅  done!"
 	
 copy-service:
-	@echo "\n⚙️  moving service to $(service-path)\n"
-	@sudo cp $(path)/service/$(app_name).service ~/.config/systemd/user/$(app_name).service
+	@echo "\n⚙️  moving service to $(_service-path)\n"
+	@sudo cp $(_path)/service/$(app_name).service $(_service-path)/$(app_name).service
 	@echo "\n⚙️  enabling service \n"
 	-@systemctl --user daemon-reload
 	-@systemctl --user enable $(app_name)
@@ -54,7 +55,7 @@ cat-service:
 	@systemctl --user cat $(app_name)
 
 cat-log:
-	@journalctl --user --unit=vk_modules.service
+	@journalctl --user --unit=$(app_name)
 
 _stop-service:
 	-@systemctl --user stop $(app_name)
@@ -67,7 +68,7 @@ _start-service:
 	@echo "\n✅  service started\n"
 
 _black:
-	@cd $(path)
+	@cd $(_path)
 	@echo "\n🧹 cleaning the code...\n"
 	@python -m black .
 
@@ -75,4 +76,4 @@ _git_commit:
 	@cd $(path)
 	@echo "\n⚙️  pushing to git...\n"
 	@git add .
-	-@git commit -m $(commit_name)
+	-@git commit -m $(_commit_name)

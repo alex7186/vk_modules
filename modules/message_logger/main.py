@@ -15,8 +15,12 @@ async def module_execute(SCRIPT_PATH, event, vk_session_api):
     event_type_new_message = str(event.type) == "VkEventType.MESSAGE_NEW"
     event_type_edited = str(event.type) == "VkEventType.MESSAGE_EDIT"
     event_from_user = event.from_user
+    event_app_prefix_found = event.text.startswith("-&gt;")
 
-    if event_type_new_message and event_from_user:
+    if event_app_prefix_found:
+        return None
+
+    elif event_type_new_message and event_from_user:
         logging_info_str = ""
 
         logging_info_str += f"Message {event.text}::: "
