@@ -24,21 +24,21 @@ start:
 	@$(MAKE) --no-print-directory status
 
 stop:
-	@$(MAKE) _stop-service
+	@$(MAKE) --no-print-directory _stop-service
 
 restart-service:
 	-@systemctl restart $(app_name)
 
 push:
-	@$(MAKE) _black
-	@$(MAKE) _git_commit
+	@$(MAKE) --no-print-directory _black
+	@$(MAKE) --no-print-directory _git_commit
 	@echo "\n⚙️  pushing as $(_commit_name)\n"
 	@git push origin main
 	@echo "\n✅  done!"
 
 push-force:
-	@$(MAKE) _black
-	@$(MAKE) _git_commit
+	@$(MAKE) --no-print-directory _black
+	@$(MAKE) --no-print-directory _git_commit
 	@echo "\n⚙️  🚩FORCE🚩  pushing as $(_commit_name)\n"
 	@git push --force origin main
 	@echo "\n✅  done!"

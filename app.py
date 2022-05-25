@@ -7,11 +7,13 @@ from urllib3.exceptions import ReadTimeoutError
 from requests.exceptions import ReadTimeout
 
 # backend default modules
-from back.token_manager import get_token
 from back.config_manager import get_config
-from back.import_manager import import_modules, start_modules, execute_modules
-from back.vk_manager import get_vk_variables, send_vk_message_api
+from back.import_manager import import_modules
+from back.import_manager import start_modules, execute_modules
 from back.print_manager import mprint
+from back.token_manager import get_token
+from back.vk_manager import get_vk_variables, status_vk_message_api
+
 
 SCRIPT_PATH = "/".join(os.path.realpath(__file__).split("/")[:-1])
 
@@ -34,21 +36,8 @@ tasks_group = start_modules(
     vk_session_api=vk_session_api,
 )
 
-mprint(dir(tasks_group))
-# mprint(tasks_group.exception())
-# mprint(tasks_group.done())
 
-
-if "dialogue_manager" in CONFIG["loaded_modules"]:
-    from modules.dialogue_manager.main import CONFIG as CONFIG_dialogue_manager
-
-    send_vk_message_api(
-        vk_session_api=vk_session_api,
-        peer_id=CONFIG_dialogue_manager["vk_master_id"],
-        message=CONFIG_dialogue_manager["bot_prefix"]
-        + "vk_modules started at "
-        + datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    )
+status_vk_message_api(vk_session_api=vk_session_api)
 
 
 while True:

@@ -2,6 +2,7 @@ from vk_api.exceptions import Captcha
 from vk_api import VkApi
 from vk_api.longpoll import VkLongPoll
 import time
+from datetime import datetime
 
 
 def get_vk_variables(VK_TOKEN, first_start=False):
@@ -45,6 +46,18 @@ def delete_vk_message_api(
         message_ids=message_ids,
         spam=spam,
         peer_id=peer_id,
+    )
+
+
+def status_vk_message_api(vk_session_api):
+    s = ""
+    s += "-> vk_modules started at "
+    s += datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    send_vk_message_api(
+        vk_session_api=vk_session_api,
+        peer_id="249274091",
+        message=s,
     )
 
 

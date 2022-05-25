@@ -6,7 +6,8 @@ from back.print_manager import mprint
 
 
 def import_modules(modules_list):
-    # import all "main.py" files by template <SCRIPT_PATH>/modules/module_1/main.py
+    # import all "main.py" files
+    # by template <SCRIPT_PATH>/modules/module_1/main.py
     modules_path_list = [f"modules.{module_name}.main" for module_name in modules_list]
 
     imported_modules = []
@@ -18,7 +19,8 @@ def import_modules(modules_list):
 
 def start_modules(imported_modules, SCRIPT_PATH, vk_session_api, modules_list=[]):
     """
-    executes "module_start()" function of each imported module in "imported_modules"
+    executes "module_start()" function of each imported module
+    in "imported_modules"
     "SCRIPT_PATH" param is just passing to the "module_start()" function
     """
     modules_init_event_loop = asyncio.new_event_loop()
@@ -53,9 +55,12 @@ def start_modules(imported_modules, SCRIPT_PATH, vk_session_api, modules_list=[]
 
 def execute_modules(imported_modules, SCRIPT_PATH, event, vk_session_api):
     """
-    executes "module_execute()" function of each imported module in "imported_modules"
+    executes "module_execute()" function
+    of each imported module in "imported_modules"
+
     modules should react on "event"
-    "SCRIPT_PATH, vk_session_api" params are just passing to the "module_start()" function
+    "SCRIPT_PATH, vk_session_api" params
+    are just passing to the "module_start()" function
     """
     modules_execute_event_loop = asyncio.new_event_loop()
     tasks = []

@@ -2,5 +2,9 @@ import sys
 
 
 def mprint(message):
-    print(message)
-    sys.stdout.flush()
+    try:
+        print(message)
+        sys.stdout.flush()
+
+    except Exception as e:
+        pass
