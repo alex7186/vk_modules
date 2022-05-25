@@ -1,7 +1,9 @@
 import logging
+from back.print_manager import mprint
 
 
 async def module_start(SCRIPT_PATH, vk_session_api):
+    mprint("message_logger : initializing with path " + SCRIPT_PATH)
     logging.basicConfig(
         filename=f"{SCRIPT_PATH}/modules/message_logger/logfile.txt",
         filemode="a",

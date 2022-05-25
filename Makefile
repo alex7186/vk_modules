@@ -57,6 +57,10 @@ cat-service:
 cat-log:
 	@journalctl --user --unit=$(app_name)
 
+python-start:
+	@cd $(_path)
+	@python3 app.py
+
 _stop-service:
 	-@systemctl --user stop $(app_name)
 	@echo "\n❌  service stopped\n"

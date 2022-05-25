@@ -1,6 +1,7 @@
 from vk_api.exceptions import Captcha
 from vk_api import VkApi
 from vk_api.longpoll import VkLongPoll
+import time
 
 
 def get_vk_variables(VK_TOKEN, first_start=False):

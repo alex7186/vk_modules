@@ -42,10 +42,13 @@ def start_modules(imported_modules, SCRIPT_PATH, vk_session_api, modules_list=[]
 
         mprint(APP_NAME + " " + f": Imported {modules_list[i]}")
 
-    wait_tasks = asyncio.wait(tasks)
+    tasks = asyncio.wait(tasks)
+    tasks_group = asyncio.gather(tasks)
 
-    modules_init_event_loop.run_until_complete(wait_tasks)
+    modules_init_event_loop.run_until_complete(tasks)
     modules_init_event_loop.close()
+
+    return tasks_group
 
 
 def execute_modules(imported_modules, SCRIPT_PATH, event, vk_session_api):

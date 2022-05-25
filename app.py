@@ -23,16 +23,21 @@ APP_NAME = CONFIG["APP_NAME"]
 # importing inlisted modules with importlib
 imported_modules = import_modules(modules_list=CONFIG["loaded_modules"])
 vk_session_api, vk_long_poll = get_vk_variables(VK_TOKEN, first_start=True)
-mprint(APP_NAME + ": Session variables are (re)generated")
+mprint(APP_NAME + " : Session variables are (re)generated")
 
 
 # executing the `setup` method of every module
-start_modules(
+tasks_group = start_modules(
     imported_modules=imported_modules,
     SCRIPT_PATH=SCRIPT_PATH,
     modules_list=CONFIG["loaded_modules"],
     vk_session_api=vk_session_api,
 )
+
+mprint(dir(tasks_group))
+# mprint(tasks_group.exception())
+# mprint(tasks_group.done())
+
 
 if "dialogue_manager" in CONFIG["loaded_modules"]:
     from modules.dialogue_manager.main import CONFIG as CONFIG_dialogue_manager
