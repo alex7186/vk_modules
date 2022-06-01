@@ -1,5 +1,5 @@
 _today =`date '+%Y-%m-%d  %H:%M:%S'`
-_commit_name = "autocommit $(today)"
+_commit_name = "autocommit $(_today)"
 app_name = vk_modules
 _path = $(CURDIR)
 
@@ -20,7 +20,7 @@ status:
 
 start:
 	@$(MAKE) --no-print-directory _start-service
-	@sleep 3
+	@sleep 2
 	@$(MAKE) --no-print-directory status
 
 stop:
@@ -77,7 +77,7 @@ _black:
 	@python -m black .
 
 _git_commit:
-	@cd $(path)
+	@cd $(_path)
 	@echo "\n⚙️  pushing to git...\n"
 	@git add .
 	-@git commit -m $(_commit_name)

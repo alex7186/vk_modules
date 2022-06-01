@@ -16,6 +16,7 @@ def get_vk_variables(VK_TOKEN, first_start=False):
 
 
 def send_vk_message_api(vk_session_api, peer_id, message):
+
     # exceptions for vk_longpoll reloading
     try:
         vk_session_api.messages.send(

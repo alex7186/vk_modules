@@ -6,8 +6,10 @@ from back.print_manager import mprint
 
 
 def import_modules(modules_list):
-    # import all "main.py" files
-    # by template <SCRIPT_PATH>/modules/module_1/main.py
+    """
+    import all "main.py" files
+    by template <SCRIPT_PATH>/modules/module_1/main.py
+    """
     modules_path_list = [f"modules.{module_name}.main" for module_name in modules_list]
 
     imported_modules = []
