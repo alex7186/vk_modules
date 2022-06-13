@@ -24,8 +24,7 @@ APP_NAME = CONFIG["APP_NAME"]
 
 # importing inlisted modules with importlib
 imported_modules = import_modules(modules_list=CONFIG["loaded_modules"])
-vk_session_api, vk_long_poll = get_vk_variables(VK_TOKEN, first_start=True)
-mprint(APP_NAME + " : Session variables are (re)generated")
+vk_session_api, vk_long_poll = get_vk_variables(VK_TOKEN, timeout=-1)
 
 
 # executing the `setup` method of every module
@@ -62,8 +61,8 @@ while True:
     except TypeError:
         pass
 
-    except OSError:
-        pass
+    # except OSError:
+    #     pass
 
     # sometimes the longpoll timeout error occure
     # so that its necessary to update vk_session and vk_longpoll variables

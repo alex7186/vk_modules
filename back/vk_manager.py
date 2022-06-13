@@ -1,16 +1,23 @@
 from vk_api.exceptions import Captcha
 from vk_api import VkApi
 from vk_api.longpoll import VkLongPoll
+from socket import gaierror
 import time
 from datetime import datetime
 
+from back.print_manager import mprint
 
-def get_vk_variables(VK_TOKEN, first_start=False):
-    if not first_start:
-        time.sleep(6)
+
+def get_vk_variables(VK_TOKEN, timeout=6):
+
+    if timeout > 0:
+        time.sleep(timeout)
+
     vk_session = VkApi(token=VK_TOKEN)
     vk_session_api = vk_session.get_api()
     vk_long_poll = VkLongPoll(vk_session)
+
+    mprint("vk_manager : Session variables are (re)generated")
 
     return vk_session_api, vk_long_poll
 
@@ -71,4 +78,7 @@ def set_vk_silent_api(vk_session_api, peer_id, timeout_seconds, sound_mute=0):
 
 
 def set_vk_account_online(vk_session_api):
-    vk_session_api.account.setOnline()
+    try:
+        vk_session_api.account.setOnline()
+    except gaierror:
+        pass
