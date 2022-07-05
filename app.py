@@ -36,7 +36,7 @@ tasks_group = start_modules(
 )
 
 
-status_vk_message_api(vk_session_api=vk_session_api)
+# status_vk_message_api(vk_session_api=vk_session_api)
 
 
 while True:

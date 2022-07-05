@@ -46,7 +46,7 @@ push-force:
 copy-service:
 	@echo "\n⚙️  moving service to $(_service-path)\n"
 	@sudo cp $(_path)/service/$(app_name).service $(_service-path)/$(app_name).service
-	@echo "\n⚙️  enabling service \n"
+	@echo "\n⚙️  managing service \n"
 	-@systemctl --user daemon-reload
 	-@systemctl --user enable $(app_name)
 	@echo "\n✅  done!"

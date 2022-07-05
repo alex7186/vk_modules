@@ -1,11 +1,12 @@
 [Unit]
-After=network.target
+Wants=network.target
 
 [Service]
 Type=simple
 ExecStart=/bin/sh /home/pi/scripts/vk_modules/service/starter.sh
 WorkingDirectory=/home/pi/scripts/vk_modules
 Restart=always
+RestartSec=3
 StandardOutput=inherit
 
 [Install]
