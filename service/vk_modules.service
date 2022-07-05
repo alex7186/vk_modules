@@ -1,5 +1,7 @@
 [Unit]
-Wants=network.target
+Description=vk_modules
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 Type=simple
@@ -10,4 +12,4 @@ RestartSec=3
 StandardOutput=inherit
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=basic.target
